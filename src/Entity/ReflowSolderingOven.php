@@ -6,9 +6,11 @@ use App\Repository\ReflowSolderingOvenRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ReflowSolderingOvenRepository::class)
+ * @ApiResource
  */
 class ReflowSolderingOven
 {
@@ -97,7 +99,7 @@ class ReflowSolderingOven
 
     /**
      * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="reflowSolderingOvens")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="email", nullable=false)
      */
     private $manager;
 
