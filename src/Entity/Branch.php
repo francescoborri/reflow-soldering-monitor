@@ -6,9 +6,11 @@ use App\Repository\BranchRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=BranchRepository::class)
+ * @ApiResource()
  */
 class Branch
 {
@@ -50,12 +52,12 @@ class Branch
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Office::class, mappedBy="branch", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Office::class, mappedBy="branch", orphanRemoval=true, fetch="LAZY")
      */
     private $offices;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductionZone::class, mappedBy="branch", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=ProductionZone::class, mappedBy="branch", orphanRemoval=true, fetch="LAZY")
      */
     private $productionZones;
 

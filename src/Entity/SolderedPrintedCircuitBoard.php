@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\SolderedPrintedCircuitBoardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=SolderedPrintedCircuitBoardRepository::class)
+ * @ApiResource()
  */
 class SolderedPrintedCircuitBoard
 {
@@ -67,6 +69,13 @@ class SolderedPrintedCircuitBoard
     public function getSerialNumber(): ?string
     {
         return $this->serialNumber;
+    }
+
+    public function setSerialNumber(string $serialNumber): self
+    {
+        $this->serialNumber = $serialNumber;
+
+        return $this;
     }
 
     public function getEntryDatetime(): ?\DateTimeInterface

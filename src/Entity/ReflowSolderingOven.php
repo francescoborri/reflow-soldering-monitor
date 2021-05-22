@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ReflowSolderingOvenRepository::class)
- * @ApiResource
+ * @ApiResource()
  */
 class ReflowSolderingOven
 {
@@ -99,7 +99,7 @@ class ReflowSolderingOven
 
     /**
      * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="reflowSolderingOvens")
-     * @ORM\JoinColumn(referencedColumnName="email", nullable=false)
+     * @ORM\JoinColumn(referencedColumnName="fiscal_code", nullable=false)
      */
     private $manager;
 
