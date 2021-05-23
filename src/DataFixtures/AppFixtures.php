@@ -13,6 +13,7 @@ use App\Entity\ReflowSolderingOven;
 use App\Entity\SolderedPrintedCircuitBoard;
 use App\Entity\Staff;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -20,13 +21,25 @@ class AppFixtures extends Fixture
 {
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    private $entityManager;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, EntityManagerInterface $entityManager)
     {
         $this->encoder = $encoder;
+
+        $this->entityManager = $entityManager;
     }
 
     public function load(ObjectManager $manager)
     {
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE branch AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE component AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE measurement AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE office AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE printed_circuit_board AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE production_zone AUTO_INCREMENT = 1;');
+        $this->entityManager->getConnection()->executeQuery('ALTER TABLE reflow_soldering_oven AUTO_INCREMENT = 1;');
+
         $branch = new Branch();
         $branch->setName('Headquarters');
         $branch->setAddress('Via Roma 1');
@@ -125,16 +138,16 @@ class AppFixtures extends Fixture
             $manager->persist($solderedPrintedCircuitBoard);
         }
 
-        for ($j = 0; $j < 1000; $j++) {
-            $datetime = clone($now);
-            $datetime->add(new \DateInterval("PT{$i}S"));
+        // for ($j = 0; $j < 1000; $j++) {
+        //     $datetime = clone($now);
+        //     $datetime->add(new \DateInterval("PT{$i}S"));
 
-            $measurement = new Measurement();
-            $measurement->setTemperature(mt_rand(0, 230));
-            $measurement->setDatetime($datetime);
-            $measurement->setReflowSolderingOven($reflowSolderingOven);
-            $manager->persist($measurement);
-        }
+        //     $measurement = new Measurement();
+        //     $measurement->setTemperature(mt_rand(0, 230));
+        //     $measurement->setDatetime($datetime);
+        //     $measurement->setReflowSolderingOven($reflowSolderingOven);
+        //     $manager->persist($measurement);
+        // }
 
         $manager->flush();
     }

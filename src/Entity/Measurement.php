@@ -14,7 +14,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *      },
  *      collectionOperations={
  *          "get",
- *          "post"={"object.reflowSolderingOven.manager == user"}
+ *          "post"={"security_post_denormalize"="object.getReflowSolderingOven().getManager() == user", "security_post_denormalize_message"="Access denied."}
  *     },
  * )
  */
@@ -28,7 +28,7 @@ class Measurement
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", unique=true)
      */
     private $datetime;
 
