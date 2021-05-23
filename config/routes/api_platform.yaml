@@ -3,6 +3,6 @@ api_platform:
     type: api_platform
     prefix: /api
 
-authenticate:
-    path: /authenticate
+authentication:
+    path: /api/login
     methods: ['POST']

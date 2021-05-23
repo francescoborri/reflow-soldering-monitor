@@ -8,7 +8,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=MeasurementRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      attributes={
+ *          "security"="is_granted('ROLE_USER')"
+ *      },
+ *      collectionOperations={
+ *          "get",
+ *          "post"={"object.reflowSolderingOven.manager == user"}
+ *     },
+ * )
  */
 class Measurement
 {
