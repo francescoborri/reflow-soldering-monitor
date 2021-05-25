@@ -14,8 +14,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *      },
  *      collectionOperations={
  *          "get",
- *          "post"={"security_post_denormalize"="object.getReflowSolderingOven().getManager() == user", "security_post_denormalize_message"="Access denied."}
- *     },
+ *          "post"={
+ *              "security_post_denormalize"="object.getReflowSolderingOven().getManager() == user",
+ *              "security_post_denormalize_message"="Access denied."
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get"
+ *      }
  * )
  */
 class Measurement
