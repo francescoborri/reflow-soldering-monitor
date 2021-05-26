@@ -4,11 +4,22 @@ namespace App\Entity;
 
 use App\Repository\SolderedPrintedCircuitBoardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\GetSolderedPrintedCircuitBoardController;
 
 /**
  * @ORM\Entity(repositoryClass=SolderedPrintedCircuitBoardRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      collectionOperations={
+ *          "get"={
+ *              "controller"="GetSolderedPrintedCircuitBoardController::class"
+ *          },
+ *          "normalizationContext"={
+ *              "groups"="soldered_printed_circuit_board:get"
+ *          }
+ *      }
+ * )
  */
 class SolderedPrintedCircuitBoard
 {
@@ -23,25 +34,35 @@ class SolderedPrintedCircuitBoard
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=PrintedCircuitBoard::class, inversedBy="solderedPrintedCircuitBoards")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("soldered_printed_circuit_board:get")
      */
     private $printedCircuitBoard;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=20)
+     * @Groups("soldered_printed_circuit_board:get")
      */
     private $serialNumber;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("soldered_printed_circuit_board:get")
      */
     private $entryDatetime;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("soldered_printed_circuit_board:get")
      */
     private $exitDatetime;
-    
+
+    private $preheatPhaseOverLimitTemperatures;
+
+    private $reflowPhaseOverLimitTemperatures;
+
+    private $coolingPhaseOverLimitTemperatures;
+
     public function getReflowSolderingOven(): ?ReflowSolderingOven
     {
         return $this->reflowSolderingOven;
@@ -100,5 +121,27 @@ class SolderedPrintedCircuitBoard
         $this->exitDatetime = $exitDatetime;
 
         return $this;
+    }
+
+    public function getPreheatPhaseOverLimitTemperatures()
+    {
+        return $this->preheatPhaseOverLimitTemperatures;
+    }
+
+    public function setPreheatPhaseOverLimitTemperatures(int $preheatPhaseOverLimitTemperatures)
+    {
+        $this->preheatPhaseOverLimitTemperatures = $preheatPhaseOverLimitTemperatures;
+
+        return $this;
+    }
+
+    public function getReflowPhaseOverLimitTemperatures()
+    {
+        return $this->preheatPhaseOverLimitTemperatures;
+    }
+
+    public function getCoolingPhaseOverLimitTemperatures()
+    {
+        return $this->preheatPhaseOverLimitTemperatures;
     }
 }

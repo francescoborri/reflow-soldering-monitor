@@ -19,6 +19,17 @@ class MeasurementRepository extends ServiceEntityRepository
         parent::__construct($registry, Measurement::class);
     }
 
+    public function getByRange(\DateTimeInterface $start, \DateTimeInterface $end)
+    {
+        return $this->createQueryBuilder('measurement')
+            ->andWhere('measurement.datetime >= :start')
+            ->andWhere('measurement.datetime < :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Measurement[] Returns an array of Measurement objects
     //  */
