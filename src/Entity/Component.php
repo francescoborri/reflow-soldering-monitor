@@ -10,7 +10,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ComponentRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"}
+ * )
  */
 class Component
 {

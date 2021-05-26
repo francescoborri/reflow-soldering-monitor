@@ -9,18 +9,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass=MeasurementRepository::class)
  * @ApiResource(
- *      attributes={
- *          "security"="is_granted('ROLE_USER')"
- *      },
  *      collectionOperations={
- *          "get",
- *          "post"={
- *              "security_post_denormalize"="object.getReflowSolderingOven().getManager() == user",
- *              "security_post_denormalize_message"="Access denied."
- *          }
+ *          "get"={"security"="is_granted('ROLE_USER')"},
+ *          "post"
  *      },
  *      itemOperations={
- *          "get"
+ *          "get"={"security"="is_granted('ROLE_USER')"}
  *      }
  * )
  */

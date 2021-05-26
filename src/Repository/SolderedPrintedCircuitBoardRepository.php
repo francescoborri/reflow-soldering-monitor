@@ -18,33 +18,4 @@ class SolderedPrintedCircuitBoardRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SolderedPrintedCircuitBoard::class);
     }
-
-    // /**
-    //  * @return SolderedPrintedCircuitBoard[] Returns an array of SolderedPrintedCircuitBoard objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?SolderedPrintedCircuitBoard
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

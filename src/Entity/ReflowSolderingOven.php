@@ -10,7 +10,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=ReflowSolderingOvenRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      collectionOperations={"get"},
+ *      itemOperations={"get","put"}
+ * )
  */
 class ReflowSolderingOven
 {
@@ -37,17 +41,17 @@ class ReflowSolderingOven
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $preheatPhaseDuration;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $reflowPhaseDuration;
 
     /**
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @ORM\Column(type="integer")
      */
     private $coolingPhaseDuration;
 

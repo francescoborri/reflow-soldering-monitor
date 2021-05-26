@@ -6,11 +6,20 @@ use App\Repository\OfficeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=OfficeRepository::class)
- * @ApiResource()
+ * @Table(
+ *      uniqueConstraints={@UniqueConstraint(columns={"floor","room","branch_id"})}
+ * )
+ * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"}
+ * )
  */
 class Office
 {

@@ -18,33 +18,4 @@ class PrintedCircuitBoardRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PrintedCircuitBoard::class);
     }
-
-    // /**
-    //  * @return PrintedCircuitBoard[] Returns an array of PrintedCircuitBoard objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?PrintedCircuitBoard
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

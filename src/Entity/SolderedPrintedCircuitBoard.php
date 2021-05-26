@@ -2,21 +2,29 @@
 
 namespace App\Entity;
 
-use App\Repository\SolderedPrintedCircuitBoardRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Controller\GetSolderedPrintedCircuitBoardController;
+use App\Controller\SolderedPrintedCircuitBoardGetController;
+use App\Repository\SolderedPrintedCircuitBoardRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SolderedPrintedCircuitBoardRepository::class)
  * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
  *      collectionOperations={
  *          "get"={
- *              "controller"="GetSolderedPrintedCircuitBoardController::class"
+ *              "controller"=SolderedPrintedCircuitBoardGetController::class,
+ *              "normalization_context"={"groups"={"soldered_printed_circuit_board:collection:get"}}
  *          },
- *          "normalizationContext"={
- *              "groups"="soldered_printed_circuit_board:get"
+ *          "post"={
+ *              "denormalization_context"={"groups"={"soldered_printed_circuit_board:collection:post"}}
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get"={
+ *              "controller"=SolderedPrintedCircuitBoardGetController::class,
+ *              "normalization_context"={"groups"={"soldered_printed_circuit_board:item:get"}}
  *          }
  *      }
  * )
@@ -27,6 +35,7 @@ class SolderedPrintedCircuitBoard
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=ReflowSolderingOven::class, inversedBy="solderedPrintedCircuitBoards")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $reflowSolderingOven;
 
@@ -34,33 +43,42 @@ class SolderedPrintedCircuitBoard
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity=PrintedCircuitBoard::class, inversedBy="solderedPrintedCircuitBoards")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups("soldered_printed_circuit_board:get")
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $printedCircuitBoard;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=20)
-     * @Groups("soldered_printed_circuit_board:get")
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $serialNumber;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("soldered_printed_circuit_board:get")
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $entryDatetime;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("soldered_printed_circuit_board:get")
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $exitDatetime;
 
+    /**
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:item:get"})
+     */
     private $preheatPhaseOverLimitTemperatures;
 
+    /**
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:item:get"})
+     */
     private $reflowPhaseOverLimitTemperatures;
 
+    /**
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:item:get"})
+     */
     private $coolingPhaseOverLimitTemperatures;
 
     public function getReflowSolderingOven(): ?ReflowSolderingOven
@@ -137,11 +155,25 @@ class SolderedPrintedCircuitBoard
 
     public function getReflowPhaseOverLimitTemperatures()
     {
-        return $this->preheatPhaseOverLimitTemperatures;
+        return $this->reflowPhaseOverLimitTemperatures;
+    }
+
+    public function setReflowPhaseOverLimitTemperatures(int $reflowPhaseOverLimitTemperatures)
+    {
+        $this->reflowPhaseOverLimitTemperatures = $reflowPhaseOverLimitTemperatures;
+
+        return $this;
     }
 
     public function getCoolingPhaseOverLimitTemperatures()
     {
-        return $this->preheatPhaseOverLimitTemperatures;
+        return $this->coolingPhaseOverLimitTemperatures;
+    }
+
+    public function setCoolingPhaseOverLimitTemperatures(int $coolingPhaseOverLimitTemperatures)
+    {
+        $this->coolingPhaseOverLimitTemperatures = $coolingPhaseOverLimitTemperatures;
+
+        return $this;
     }
 }

@@ -8,16 +8,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=StaffRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      collectionOperations={
+ *          "get"={"normalization_context"={"groups"={"staff:collection:get"}}}
+ *      },
+ *      itemOperations={
+ *          "get"={"normalization_context"={"groups"={"staff:item:get"}}}
+ *      }
+ * )
  */
 class Staff implements UserInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=16)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $fiscalCode;
 
@@ -34,61 +44,73 @@ class Staff implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $surname;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $birthDate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=5)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $position;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $salary;
 
     /**
      * @ORM\ManyToOne(targetEntity=Office::class, inversedBy="staff")
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $office;
 
     /**
      * @ORM\ManyToOne(targetEntity=ProductionZone::class, inversedBy="staff")
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $productionZone;
 
     /**
      * @ORM\OneToMany(targetEntity=ReflowSolderingOven::class, mappedBy="manager")
+     * @Groups({"staff:collection:get","staff:item:get"})
      */
     private $reflowSolderingOvens;
 

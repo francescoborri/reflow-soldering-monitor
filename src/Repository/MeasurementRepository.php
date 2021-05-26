@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Measurement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Measurement|null findOneBy(array $criteria, array $orderBy = null)
  * @method Measurement[]    findAll()
  * @method Measurement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Measurement[]    getByRange(\DateTimeInterface $start, \DateTimeInterface $end)
  */
 class MeasurementRepository extends ServiceEntityRepository
 {
@@ -19,7 +21,7 @@ class MeasurementRepository extends ServiceEntityRepository
         parent::__construct($registry, Measurement::class);
     }
 
-    public function getByRange(\DateTimeInterface $start, \DateTimeInterface $end)
+    public function getByRange(\DateTimeInterface $start, \DateTimeInterface $end): Collection
     {
         return $this->createQueryBuilder('measurement')
             ->andWhere('measurement.datetime >= :start')
@@ -29,33 +31,4 @@ class MeasurementRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return Measurement[] Returns an array of Measurement objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Measurement
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

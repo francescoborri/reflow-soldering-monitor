@@ -10,7 +10,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=BranchRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      collectionOperations={"get"},
+ *      itemOperations={"get"}
+ * )
  */
 class Branch
 {
@@ -52,12 +56,12 @@ class Branch
     private $notes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Office::class, mappedBy="branch", orphanRemoval=true, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity=Office::class, mappedBy="branch")
      */
     private $offices;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProductionZone::class, mappedBy="branch", orphanRemoval=true, fetch="LAZY")
+     * @ORM\OneToMany(targetEntity=ProductionZone::class, mappedBy="branch")
      */
     private $productionZones;
 

@@ -99,7 +99,7 @@ class AppFixtures extends Fixture
         $reflowSolderingOven->setModel('Reflow Soldering Oven');
         $reflowSolderingOven->setBrand('Panasonic');
         $reflowSolderingOven->setPreheatPhaseDuration(75);
-        $reflowSolderingOven->setReflowPhaseDuration(50.5);
+        $reflowSolderingOven->setReflowPhaseDuration(50);
         $reflowSolderingOven->setCoolingPhaseDuration(5);
         $reflowSolderingOven->setPreheatPhaseMax(130);
         $reflowSolderingOven->setPreheatPhaseMin(170);
@@ -126,7 +126,7 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 10; $i++) {
             $now = new \DateTime('now');
-            $end = clone($now);
+            $end = clone $now;
             $end->add(new \DateInterval('PT140S'));
 
             $solderedPrintedCircuitBoard = new SolderedPrintedCircuitBoard();
@@ -138,16 +138,16 @@ class AppFixtures extends Fixture
             $manager->persist($solderedPrintedCircuitBoard);
         }
 
-        // for ($j = 0; $j < 1000; $j++) {
-        //     $datetime = clone($now);
-        //     $datetime->add(new \DateInterval("PT{$i}S"));
+        for ($i = 0; $i < 1000; $i++) {
+            $datetime = clone $now;
+            $datetime->add(new \DateInterval("PT{$i}S"));
 
-        //     $measurement = new Measurement();
-        //     $measurement->setTemperature(mt_rand(0, 230));
-        //     $measurement->setDatetime($datetime);
-        //     $measurement->setReflowSolderingOven($reflowSolderingOven);
-        //     $manager->persist($measurement);
-        // }
+            $measurement = new Measurement();
+            $measurement->setTemperature(mt_rand(0, 230));
+            $measurement->setDatetime($datetime);
+            $measurement->setReflowSolderingOven($reflowSolderingOven);
+            $manager->persist($measurement);
+        }
 
         $manager->flush();
     }

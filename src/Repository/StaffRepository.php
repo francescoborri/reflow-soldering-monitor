@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method Staff|null findOneBy(array $criteria, array $orderBy = null)
  * @method Staff[]    findAll()
  * @method Staff[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method void       upgradePassword(UserInterface $user, string $newEncodedPassword)
  */
 class StaffRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
@@ -35,33 +36,4 @@ class StaffRepository extends ServiceEntityRepository implements PasswordUpgrade
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
-    // /**
-    //  * @return Staff[] Returns an array of Staff objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Staff
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
