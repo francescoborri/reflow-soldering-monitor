@@ -7,11 +7,16 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Controller\SolderedPrintedCircuitBoardGetController;
 use App\Repository\SolderedPrintedCircuitBoardRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=SolderedPrintedCircuitBoardRepository::class)
  * @ApiResource(
- *      attributes={"security"="is_granted('ROLE_USER')"},
+ *      attributes={
+ *          "security"="is_granted('ROLE_USER')",
+ *          "order"={"serialNumber": "DESC"}
+ *      },
  *      collectionOperations={
  *          "get"={
  *              "controller"=SolderedPrintedCircuitBoardGetController::class,
@@ -28,11 +33,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          }
  *      }
  * )
+ * @ApiFilter(OrderFilter::class, properties={"serialNumber"})
  */
 class SolderedPrintedCircuitBoard
 {
     /**
      * @ORM\Id
+     * @ORM\Column(type="string", length=20)
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
+     */
+    private $serialNumber;
+
+    /**
      * @ORM\ManyToOne(targetEntity=ReflowSolderingOven::class, inversedBy="solderedPrintedCircuitBoards")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
@@ -40,19 +52,11 @@ class SolderedPrintedCircuitBoard
     private $reflowSolderingOven;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=PrintedCircuitBoard::class, inversedBy="solderedPrintedCircuitBoards")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
      */
     private $printedCircuitBoard;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:collection:post","soldered_printed_circuit_board:item:get"})
-     */
-    private $serialNumber;
 
     /**
      * @ORM\Column(type="datetime")
@@ -81,6 +85,18 @@ class SolderedPrintedCircuitBoard
      */
     private $coolingPhaseOverLimitTemperatures;
 
+    public function getSerialNumber(): ?string
+    {
+        return $this->serialNumber;
+    }
+
+    public function setSerialNumber(string $serialNumber): self
+    {
+        $this->serialNumber = $serialNumber;
+
+        return $this;
+    }
+
     public function getReflowSolderingOven(): ?ReflowSolderingOven
     {
         return $this->reflowSolderingOven;
@@ -101,18 +117,6 @@ class SolderedPrintedCircuitBoard
     public function setPrintedCircuitBoard(?PrintedCircuitBoard $printedCircuitBoard): self
     {
         $this->printedCircuitBoard = $printedCircuitBoard;
-
-        return $this;
-    }
-
-    public function getSerialNumber(): ?string
-    {
-        return $this->serialNumber;
-    }
-
-    public function setSerialNumber(string $serialNumber): self
-    {
-        $this->serialNumber = $serialNumber;
 
         return $this;
     }
