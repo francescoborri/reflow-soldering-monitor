@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * @ApiResource(
  *      attributes={
  *          "security"="is_granted('ROLE_USER')",
- *          "order"={"serialNumber": "DESC"}
+ *          "order"={"exitDatetime": "DESC"}
  *      },
  *      collectionOperations={
  *          "get"={

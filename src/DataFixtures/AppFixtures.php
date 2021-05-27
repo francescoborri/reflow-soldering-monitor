@@ -101,8 +101,8 @@ class AppFixtures extends Fixture
         $reflowSolderingOven->setPreheatPhaseDuration(75);
         $reflowSolderingOven->setReflowPhaseDuration(50);
         $reflowSolderingOven->setCoolingPhaseDuration(5);
-        $reflowSolderingOven->setPreheatPhaseMax(130);
-        $reflowSolderingOven->setPreheatPhaseMin(170);
+        $reflowSolderingOven->setPreheatPhaseMax(170);
+        $reflowSolderingOven->setPreheatPhaseMin(130);
         $reflowSolderingOven->setReflowPhaseMax(218);
         $reflowSolderingOven->setReflowPhaseMin(217);
         $reflowSolderingOven->setCoolingPhaseMax(217);
@@ -124,10 +124,10 @@ class AppFixtures extends Fixture
             $manager->persist($relation);
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $now = new \DateTime('now');
             $end = clone $now;
-            $end->add(new \DateInterval('PT140S'));
+            $end->add(new \DateInterval('PT' . strval($i + 100) . 'S'));
 
             $solderedPrintedCircuitBoard = new SolderedPrintedCircuitBoard();
             $solderedPrintedCircuitBoard->setSerialNumber("S$i");
@@ -143,7 +143,7 @@ class AppFixtures extends Fixture
             $datetime->add(new \DateInterval("PT{$i}S"));
 
             $measurement = new Measurement();
-            $measurement->setTemperature(mt_rand(0, 230));
+            $measurement->setTemperature(mt_rand(0, 218));
             $measurement->setDatetime($datetime);
             $measurement->setReflowSolderingOven($reflowSolderingOven);
             $manager->persist($measurement);

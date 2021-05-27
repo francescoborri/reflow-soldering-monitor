@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PrintedCircuitBoardRepository::class)
@@ -22,26 +23,31 @@ class PrintedCircuitBoard
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"soldered_printed_circuit_board:item:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"soldered_printed_circuit_board:collection:get","soldered_printed_circuit_board:item:get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"soldered_printed_circuit_board:item:get"})
      */
     private $shape;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"soldered_printed_circuit_board:item:get"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @Groups({"soldered_printed_circuit_board:item:get"})
      */
     private $cost;
 

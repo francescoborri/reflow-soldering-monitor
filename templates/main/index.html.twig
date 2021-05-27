@@ -4,31 +4,99 @@
 	Monitor
 {% endblock %}
 
+{% block css %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block header %}
+	<nav class="navbar navbar-expand-lg bg-trasparent sticky-top">
+		<div class="container-fluid">
+			<div class="d-flex">
+				<div class="dropdown">
+					<a class="dropdown-toggle text-decoration-none text-muted fs-3" role="button" id="user-dropdown" data-bs-toggle="dropdown">
+						<i class="bi bi-person-circle"></i>
+					</a>
+					<ul id="user-dropdown-menu" class="dropdown-menu" aria-labelledby="user-dropdown">
+						<li class="dropdown-item">Please login first</li>
+					</ul>
+				</div>
+			</div>
+			<span class="navbar-brand fs-3">
+				<i class="bi bi-thermometer-half"></i>
+			</span>
+		</div>
+	</nav>
+{% endblock %}
+
 {% block body %}
-	<div class="container m-auto row">
-		<div class="card shadow col-md-6 col-sm-8 col-10" id="login-card">
-			<div class="card-body">
-				<form id="login-form">
-					<div class="mb-3">
-						<label for="email" class="form-label">Email address</label>
-						<input type="text" id="email" class="form-control">
+	<div class="container-md m-auto">
+		<div class="row">
+			<div class="col-md-6 col-sm-8 col-10" id="login-card">
+				<div class="card shadow">
+					<div class="card-body">
+						<form id="login-form">
+							<div class="mb-3">
+								<label for="email" class="form-label">Email address</label>
+								<input type="text" id="email" class="form-control">
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label">Password</label>
+								<input type="password" id="password" class="form-control">
+							</div>
+							<button type="submit" class="btn btn-primary">Login</button>
+						</form>
 					</div>
-					<div class="mb-3">
-						<label for="password" class="form-label">Password</label>
-						<input type="password" id="password" class="form-control">
+				</div>
+			</div>
+			<div class="col-12" id="monitor-card">
+				<div class="card shadow">
+					<div class="row g-4 p-4">
+						<div class="col-md-4 col-sm-5 col-6">
+							<div class="card shadow h-100">
+								<div class="card-header text-center">
+									<code id="pcb-serial-number"></code>
+								</div>
+								<ul class="list-group list-group-flush h-100">
+									<li class="list-group-item">
+										Model name:
+										<span id="pcb-model-name"></span>
+									</li>
+									<li class="list-group-item">
+										Cost:
+										<span id="pcb-cost"></span>
+									</li>
+									<li class="list-group-item">
+										Soldered at:
+										<span id="pcb-exit-datetime"></span>
+									</li>
+									<li class="list-group-item">
+										Description:
+										<span id="pcb-description"></span>
+									</li>
+								</ul>
+								<div class="card-footer">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-sm-auto">Overlimit temperatures</div>
+										<div class="col-sm-auto">
+											<span class="badge rounded-pill" id="pcb-overlimit-temps"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8 col-sm-7 col-6">
+							<ul class="list-group list-group-flush overflow-auto shadow rounded border" id="pcb-list-group" style="max-height: 500px"></ul>
+						</div>
 					</div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-				</form>
+				</div>
 			</div>
 		</div>
-		<div class="card d-none" id="monitor-card">
-            
-        </div>
 	</div>
 {% endblock %}
 
 {% block js %}
-    {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="js/api.js" type="text/javascript"></script>
+	{{ parent() }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="{{ asset('js/api.js') }}" type="text/javascript"></script>
 {% endblock %}
