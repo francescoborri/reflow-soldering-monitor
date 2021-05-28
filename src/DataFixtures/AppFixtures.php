@@ -94,9 +94,9 @@ class AppFixtures extends Fixture
             $reflowSolderingOven = new ReflowSolderingOven();
             $reflowSolderingOven->setModel('Reflow Soldering Oven');
             $reflowSolderingOven->setBrand('Panasonic');
-            $reflowSolderingOven->setPreheatPhaseDuration(5);
-            $reflowSolderingOven->setReflowPhaseDuration(5);
-            $reflowSolderingOven->setCoolingPhaseDuration(5);
+            $reflowSolderingOven->setPreheatPhaseDuration(20);
+            $reflowSolderingOven->setReflowPhaseDuration(20);
+            $reflowSolderingOven->setCoolingPhaseDuration(20);
             $reflowSolderingOven->setPreheatPhaseMax(170);
             $reflowSolderingOven->setPreheatPhaseMin(130);
             $reflowSolderingOven->setReflowPhaseMax(218);
@@ -139,8 +139,6 @@ class AppFixtures extends Fixture
                 $manager->persist($relation);
             }
         }
-
-        
 
         $manager->flush();
     }
