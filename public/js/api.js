@@ -16,7 +16,6 @@ let pcbExitDatetime = document.getElementById('pcb-exit-datetime');
 let pcbDescription = document.getElementById('pcb-description');
 let pcbOverlimitTemperatures = document.getElementById('pcb-overlimit-temps');
 let pcbListGroup = document.getElementById('pcb-list-group');
-let selectedPCBSerialNumber = null;
 let timer = null;
 let interval = 1000;
 
@@ -65,8 +64,8 @@ function showPCB(pcb) {
 }
 
 function onclickPCB(event) {
-    selectedPCBSerialNumber = event.target.getAttribute('data-serial-number');
-    loadPCB(selectedPCBSerialNumber);
+    let serialNumber = event.target.getAttribute('data-serial-number'); 
+    loadPCB(serialNumber);
 }
 
 async function loadPCB(serialNumber) {
@@ -136,9 +135,8 @@ async function loadPCBs(showFirstPCB) {
         showList(response.data);
 
         if (showFirstPCB)
-            selectedPCBSerialNumber = response.data[0].serialNumber;
+            loadPCB(response.data[0].serialNumber);
 
-        loadPCB(selectedPCBSerialNumber);
     }, (error) => {
         console.log(error);
         if (error.response.status == 401)
