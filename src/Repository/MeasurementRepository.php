@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Measurement;
+use App\Entity\ReflowSolderingOven;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,11 +21,13 @@ class MeasurementRepository extends ServiceEntityRepository
         parent::__construct($registry, Measurement::class);
     }
 
-    public function getByRange(\DateTimeInterface $start, \DateTimeInterface $end)
+    public function getByRange(ReflowSolderingOven $reflowSolderingOven, \DateTimeInterface $start, \DateTimeInterface $end)
     {
         return $this->createQueryBuilder('measurement')
+            ->andWhere('measurement.reflowSolderingOven = :reflowSolderingOven')
             ->andWhere('measurement.datetime >= :start')
             ->andWhere('measurement.datetime < :end')
+            ->setParameter('reflowSolderingOven', $reflowSolderingOven)
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             ->getQuery()

@@ -38,11 +38,11 @@ class UploadTempsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $reflowSolderingOvens = $this->entityManager->getRepository(ReflowSolderingOven::class)->findAll();
+        $reflowSolderingOven = $this->entityManager->getRepository(ReflowSolderingOven::class)->find(1);
 
         while (true) {
             $measurement = new Measurement();
-            $measurement->setReflowSolderingOven($reflowSolderingOvens[mt_rand(0, count($reflowSolderingOvens) - 1)]);
+            $measurement->setReflowSolderingOven($reflowSolderingOven);
             $measurement->setDatetime(new \DateTime());
             $measurement->setTemperature((mt_rand() / mt_getrandmax() * ($input->getArgument('max') - $input->getArgument('min'))) + $input->getArgument('min'));
 

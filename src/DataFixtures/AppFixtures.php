@@ -41,7 +41,6 @@ class AppFixtures extends Fixture
         $branch = new Branch();
         $branch->setName('Headquarters');
         $branch->setAddress('Via Roma 1');
-        $branch->setCity('Arezzo');
         $branch->setPostalCode('52100');
         $branch->setDescription('Headquarters');
         $manager->persist($branch);
@@ -90,23 +89,21 @@ class AppFixtures extends Fixture
         $labourer->setProductionZone($productionZone);
         $manager->persist($labourer);
 
-        for ($i = 0; $i < 30; $i++) {
-            $reflowSolderingOven = new ReflowSolderingOven();
-            $reflowSolderingOven->setModel('Reflow Soldering Oven');
-            $reflowSolderingOven->setBrand('Panasonic');
-            $reflowSolderingOven->setPreheatPhaseDuration(20);
-            $reflowSolderingOven->setReflowPhaseDuration(20);
-            $reflowSolderingOven->setCoolingPhaseDuration(20);
-            $reflowSolderingOven->setPreheatPhaseMax(170);
-            $reflowSolderingOven->setPreheatPhaseMin(130);
-            $reflowSolderingOven->setReflowPhaseMax(218);
-            $reflowSolderingOven->setReflowPhaseMin(210);
-            $reflowSolderingOven->setCoolingPhaseMax(217);
-            $reflowSolderingOven->setCoolingPhaseMin(0);
-            $reflowSolderingOven->setProductionZone($productionZone);
-            $reflowSolderingOven->setManager($labourer);
-            $manager->persist($reflowSolderingOven);
-        }
+        $reflowSolderingOven = new ReflowSolderingOven();
+        $reflowSolderingOven->setModel('Reflow Soldering Oven');
+        $reflowSolderingOven->setBrand('Panasonic');
+        $reflowSolderingOven->setPreheatPhaseDuration(20);
+        $reflowSolderingOven->setReflowPhaseDuration(20);
+        $reflowSolderingOven->setCoolingPhaseDuration(20);
+        $reflowSolderingOven->setPreheatPhaseMax(170);
+        $reflowSolderingOven->setPreheatPhaseMin(130);
+        $reflowSolderingOven->setReflowPhaseMax(218);
+        $reflowSolderingOven->setReflowPhaseMin(210);
+        $reflowSolderingOven->setCoolingPhaseMax(217);
+        $reflowSolderingOven->setCoolingPhaseMin(0);
+        $reflowSolderingOven->setProductionZone($productionZone);
+        $reflowSolderingOven->setManager($labourer);
+        $manager->persist($reflowSolderingOven);
 
         $components = [];
 

@@ -30,6 +30,7 @@ class SolderedPrintedCircuitBoardGetController extends AbstractController
     public function operation(SolderedPrintedCircuitBoard $data): SolderedPrintedCircuitBoard
     {
         $solderedPrintedCircuitBoardMeasurements = $this->measurementRepository->getByRange(
+            $data->getReflowSolderingOven(),
             $data->getEntryDatetime(),
             $data->getExitDatetime()
         );

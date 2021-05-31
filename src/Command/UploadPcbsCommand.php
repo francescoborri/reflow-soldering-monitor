@@ -37,7 +37,7 @@ class UploadPcbsCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $reflowSolderingOvens = $this->entityManager->getRepository(ReflowSolderingOven::class)->findAll();
+        $reflowSolderingOven = $this->entityManager->getRepository(ReflowSolderingOven::class)->find(1);
         $printedCircuitBoards = $this->entityManager->getRepository(PrintedCircuitBoard::class)->findAll();
 
         $chars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
@@ -50,7 +50,7 @@ class UploadPcbsCommand extends Command
 
             $solderedPrintedCircuitBoard = new SolderedPrintedCircuitBoard();
             $solderedPrintedCircuitBoard->setSerialNumber($serialNumber);
-            $solderedPrintedCircuitBoard->setReflowSolderingOven($reflowSolderingOvens[mt_rand(0, count($reflowSolderingOvens) - 1)]);
+            $solderedPrintedCircuitBoard->setReflowSolderingOven($reflowSolderingOven);
             $solderedPrintedCircuitBoard->setPrintedCircuitBoard($printedCircuitBoards[mt_rand(0, count($printedCircuitBoards) - 1)]);
             $solderedPrintedCircuitBoard->setEntryDatetime(new \DateTime());
             sleep($input->getArgument('interval'));
